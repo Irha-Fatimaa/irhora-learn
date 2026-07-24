@@ -1,3 +1,5 @@
+import { BookOpen, Brain, Target } from "lucide-react";
+
 export default function About() {
   return (
     <section
@@ -21,9 +23,11 @@ export default function About() {
               Instead of spending hours organizing material, focus on learning.
             </p>
 
-            <div className="mt-10 space-y-5">
+            <div className="mt-10 space-y-6">
               <div className="flex items-start gap-4">
-                <span className="text-2xl">📚</span>
+                <div className="rounded-xl bg-primary/10 p-3">
+                  <BookOpen className="text-primary" size={24} />
+                </div>
 
                 <div>
                   <h3 className="font-semibold text-heading">
@@ -37,7 +41,9 @@ export default function About() {
               </div>
 
               <div className="flex items-start gap-4">
-                <span className="text-2xl">🧠</span>
+                <div className="rounded-xl bg-primary/10 p-3">
+                  <Brain className="text-primary" size={24} />
+                </div>
 
                 <div>
                   <h3 className="font-semibold text-heading">
@@ -51,7 +57,9 @@ export default function About() {
               </div>
 
               <div className="flex items-start gap-4">
-                <span className="text-2xl">🎯</span>
+                <div className="rounded-xl bg-primary/10 p-3">
+                  <Target className="text-primary" size={24} />
+                </div>
 
                 <div>
                   <h3 className="font-semibold text-heading">
@@ -66,14 +74,14 @@ export default function About() {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-border bg-white p-10 shadow-lg">
+          <div className="rounded-3xl border border-border bg-white p-10 shadow-lg transition duration-300 hover:-translate-y-2 hover:shadow-xl">
             <h3 className="text-2xl font-bold text-heading">
               How It Works
             </h3>
 
             <div className="mt-8 space-y-8">
               <div>
-                <span className="text-primary font-bold">
+                <span className="font-bold text-primary">
                   01
                 </span>
 
@@ -87,7 +95,7 @@ export default function About() {
               </div>
 
               <div>
-                <span className="text-primary font-bold">
+                <span className="font-bold text-primary">
                   02
                 </span>
 
@@ -101,7 +109,7 @@ export default function About() {
               </div>
 
               <div>
-                <span className="text-primary font-bold">
+                <span className="font-bold text-primary">
                   03
                 </span>
 
