@@ -1,5 +1,6 @@
 import AuthLayout from "@/components/auth/AuthLayout";
 import AuthCard from "@/components/auth/AuthCard";
+import LoginForm from "@/components/auth/LoginForm";
 
 export default function LoginPage() {
   return (
@@ -12,6 +13,8 @@ export default function LoginPage() {
         <p className="mt-2 text-muted">
           Sign in to continue learning with Iris.
         </p>
+
+        <LoginForm />
       </AuthCard>
     </AuthLayout>
   );
