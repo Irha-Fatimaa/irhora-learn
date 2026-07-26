@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   MessageSquare,
@@ -44,6 +47,8 @@ const links = [
 ];
 
 export default function Sidebar() {
+  const pathname = usePathname();
+
   return (
     <aside className="flex h-screen w-72 flex-col border-r border-border bg-white">
       <div className="border-b border-border p-6">
@@ -54,13 +59,24 @@ export default function Sidebar() {
         {links.map((link) => {
           const Icon = link.icon;
 
+          const isActive =
+            pathname === link.href ||
+            (link.href === "/dashboard" && pathname === "/dashboard");
+
           return (
             <Link
               key={link.label}
               href={link.href}
-              className="flex items-center gap-3 rounded-xl px-4 py-3 font-medium text-text transition hover:bg-primary/10 hover:text-primary"
+              className={`flex items-center gap-3 rounded-xl px-4 py-3 font-medium transition-all duration-200 ${
+                isActive
+                  ? "bg-primary text-white shadow-md"
+                  : "text-text hover:bg-primary/10 hover:text-primary"
+              }`}
             >
-              <Icon size={22} />
+              <Icon
+                size={22}
+                className="shrink-0"
+              />
               {link.label}
             </Link>
           );

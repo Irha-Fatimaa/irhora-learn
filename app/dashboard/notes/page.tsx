@@ -1,62 +1,164 @@
+"use client";
+
+import { useCallback, useEffect, useState } from "react";
+
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import NoteCard from "@/components/dashboard/NoteCard";
+
+import NotesGrid from "@/components/notes/NotesGrid";
+import AddNoteModal from "@/components/notes/AddNoteModal";
+
+import { useAuth } from "@/contexts/AuthContext";
+
+import {
+  addNote,
+  deleteNote,
+  getNotes,
+  updateNote,
+} from "@/services/notes";
+
+import { Note } from "@/types/note";
 
 export default function NotesPage() {
-  return (
-    <div className="space-y-8">
-      <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
-        <div>
-          <h1 className="text-4xl font-bold text-heading">
-            Notes
-          </h1>
+  const { user } = useAuth();
 
-          <p className="mt-2 text-muted">
-            Organize all your study notes in one place.
-          </p>
+  const [notes, setNotes] = useState<Note[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const [open, setOpen] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editingTitle, setEditingTitle] = useState("");
+  const [editingSubject, setEditingSubject] = useState("");
+
+  const fetchNotes = useCallback(async () => {
+    if (!user) {
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const data = await getNotes(user.uid);
+      setNotes(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    fetchNotes();
+  }, [fetchNotes]);
+
+  async function handleSave(
+    title: string,
+    subject: string
+  ) {
+    if (!user) return;
+
+    if (editingId) {
+      await updateNote(
+        user.uid,
+        editingId,
+        title,
+        subject
+      );
+    } else {
+      await addNote(
+        user.uid,
+        title,
+        subject
+      );
+    }
+
+    await fetchNotes();
+
+    setEditingId(null);
+    setEditingTitle("");
+    setEditingSubject("");
+  }
+
+  async function handleDelete(noteId: string) {
+    if (!user) return;
+
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this note?"
+    );
+
+    if (!confirmed) return;
+
+    await deleteNote(user.uid, noteId);
+
+    await fetchNotes();
+  }
+
+  function handleEdit(
+    id: string,
+    title: string,
+    subject: string
+  ) {
+    setEditingId(id);
+    setEditingTitle(title);
+    setEditingSubject(subject);
+
+    setOpen(true);
+  }
+
+  function handleClose() {
+    setOpen(false);
+
+    setEditingId(null);
+    setEditingTitle("");
+    setEditingSubject("");
+  }
+
+  if (loading) {
+    return (
+      <div className="p-8">
+        Loading notes...
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="space-y-8">
+        <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+          <div>
+            <h1 className="text-4xl font-bold text-heading">
+              Notes
+            </h1>
+
+            <p className="mt-2 text-muted">
+              Organize all your study notes in one place.
+            </p>
+          </div>
+
+          <Button onClick={() => setOpen(true)}>
+            + New Note
+          </Button>
         </div>
 
-        <Button>
-          Upload Notes
-        </Button>
+        <Input
+          type="text"
+          placeholder="Search notes..."
+        />
+
+        <NotesGrid
+          notes={notes}
+          onDelete={handleDelete}
+          onEdit={handleEdit}
+        />
       </div>
 
-      <Input
-        type="text"
-        placeholder="Search notes..."
+      <AddNoteModal
+        open={open}
+        onClose={handleClose}
+        onSave={handleSave}
+        initialTitle={editingTitle}
+        initialSubject={editingSubject}
+        isEditing={editingId !== null}
       />
-
-      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-        <NoteCard
-          title="Introduction to AI"
-          subject="Artificial Intelligence"
-        />
-
-        <NoteCard
-          title="Database Normalization"
-          subject="DBMS"
-        />
-
-        <NoteCard
-          title="OSI Model"
-          subject="Networking"
-        />
-
-        <NoteCard
-          title="Binary Trees"
-          subject="DSA"
-        />
-
-        <NoteCard
-          title="Probability Basics"
-          subject="Mathematics"
-        />
-
-        <NoteCard
-          title="Machine Learning"
-          subject="AI"
-        />
-      </div>
-    </div>
+    </>
   );
 }
