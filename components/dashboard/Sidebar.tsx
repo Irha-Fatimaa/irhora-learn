@@ -20,10 +20,10 @@ const links = [
     icon: LayoutDashboard,
   },
   {
-    label: "AI Chat",
-    href: "/dashboard/chat",
-    icon: MessageSquare,
-  },
+  label: "Iris AI",
+  href: "/dashboard/ai",
+  icon: MessageSquare,
+},
   {
     label: "Notes",
     href: "/dashboard/notes",
