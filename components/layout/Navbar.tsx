@@ -15,12 +15,10 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 border-b border-border bg-white/80 backdrop-blur">
       <Container>
         <nav className="flex h-20 items-center justify-between">
-          {/* Logo */}
           <Link href="/">
             <Logo />
           </Link>
 
-          {/* Desktop Navigation */}
           <ul className="hidden items-center gap-8 md:flex">
             {navLinks.map((link) => (
               <li key={link.label}>
@@ -34,12 +32,12 @@ export default function Navbar() {
             ))}
           </ul>
 
-          {/* CTA */}
-          <div className="hidden md:block">
-            <Button>Get Started</Button>
-          </div>
+<div className="hidden md:block">
+  <Link href="/login">
+    <Button>Login</Button>
+  </Link>
+</div>
 
-          {/* Mobile Menu */}
           <button
             className="flex h-10 w-10 items-center justify-center rounded-xl border border-border transition hover:bg-slate-100 md:hidden"
             aria-label="Open navigation menu"

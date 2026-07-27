@@ -3,6 +3,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   orderBy,
   query,
@@ -23,6 +24,7 @@ export async function addNote(
     {
       title,
       subject,
+      content: "",
       createdAt: serverTimestamp(),
     }
   );
@@ -40,19 +42,37 @@ export async function getNotes(
 
   return snapshot.docs.map((docSnap) => ({
     id: docSnap.id,
-    title: docSnap.data().title,
-    subject: docSnap.data().subject,
-    createdAt: docSnap.data().createdAt?.toDate() ?? new Date(),
+    title: docSnap.data().title ?? "",
+    subject: docSnap.data().subject ?? "",
+    content: docSnap.data().content ?? "",
+    createdAt:
+      docSnap.data().createdAt?.toDate() ??
+      new Date(),
   }));
 }
 
-export async function deleteNote(
+export async function getNote(
   userId: string,
   noteId: string
-) {
-  await deleteDoc(
+): Promise<Note> {
+  const snapshot = await getDoc(
     doc(db, "users", userId, "notes", noteId)
   );
+
+  const data = snapshot.data();
+
+  if (!data) {
+    throw new Error("Note not found");
+  }
+
+  return {
+    id: snapshot.id,
+    title: data.title ?? "",
+    subject: data.subject ?? "",
+    content: data.content ?? "",
+    createdAt:
+      data.createdAt?.toDate() ?? new Date(),
+  };
 }
 
 export async function updateNote(
@@ -67,5 +87,27 @@ export async function updateNote(
       title,
       subject,
     }
+  );
+}
+
+export async function updateNoteContent(
+  userId: string,
+  noteId: string,
+  content: string
+) {
+  await updateDoc(
+    doc(db, "users", userId, "notes", noteId),
+    {
+      content,
+    }
+  );
+}
+
+export async function deleteNote(
+  userId: string,
+  noteId: string
+) {
+  await deleteDoc(
+    doc(db, "users", userId, "notes", noteId)
   );
 }

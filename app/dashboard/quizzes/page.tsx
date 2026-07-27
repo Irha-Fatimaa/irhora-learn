@@ -1,62 +1,53 @@
-import Button from "@/components/ui/Button";
-import QuizCard from "@/components/dashboard/QuizCard";
+"use client";
+
+import { useEffect, useState } from "react";
+
+import QuizGenerator from "@/components/pdf/QuizGenerator";
 
 export default function QuizzesPage() {
+  const [pdfText, setPdfText] =
+    useState("");
+
+  useEffect(() => {
+    const stored =
+      localStorage.getItem(
+        "irhora-pdf-text"
+      );
+
+    if (stored) {
+      setPdfText(stored);
+    }
+  }, []);
+
   return (
     <div className="space-y-8">
-      <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
-        <div>
-          <h1 className="text-4xl font-bold text-heading">
-            Quizzes
-          </h1>
+      <div>
+        <h1 className="text-4xl font-bold text-heading">
+          AI Quiz Generator
+        </h1>
 
-          <p className="mt-2 text-muted">
-            Practice with AI-generated quizzes.
+        <p className="mt-2 text-muted">
+          Generate quizzes from your uploaded
+          notes.
+        </p>
+      </div>
+
+      {!pdfText ? (
+        <div className="rounded-2xl border border-border bg-white p-8 shadow-sm">
+          <h2 className="text-2xl font-bold">
+            No Notes Uploaded
+          </h2>
+
+          <p className="mt-4 text-muted">
+            Upload a PDF from the AI Notes page
+            first. Once uploaded, your notes
+            will automatically be available for
+            quiz generation.
           </p>
         </div>
-
-        <Button>
-          Generate Quiz
-        </Button>
-      </div>
-
-      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-        <QuizCard
-          title="Artificial Intelligence"
-          questions={15}
-          difficulty="Easy"
-        />
-
-        <QuizCard
-          title="Database Systems"
-          questions={20}
-          difficulty="Medium"
-        />
-
-        <QuizCard
-          title="Computer Networks"
-          questions={18}
-          difficulty="Hard"
-        />
-
-        <QuizCard
-          title="Operating Systems"
-          questions={25}
-          difficulty="Medium"
-        />
-
-        <QuizCard
-          title="Data Structures"
-          questions={12}
-          difficulty="Easy"
-        />
-
-        <QuizCard
-          title="Machine Learning"
-          questions={22}
-          difficulty="Hard"
-        />
-      </div>
+      ) : (
+        <QuizGenerator pdfText={pdfText} />
+      )}
     </div>
   );
 }

@@ -6,6 +6,7 @@ import UploadPdf from "@/components/pdf/UploadPdf";
 import PdfInfoCard from "@/components/pdf/PdfInfoCard";
 import QuickActionGrid from "@/components/pdf/QuickActionGrid";
 import PdfChat from "@/components/pdf/PdfChat";
+import QuizGenerator from "@/components/pdf/QuizGenerator";
 
 import { extractPdfText } from "@/lib/pdf";
 
@@ -25,7 +26,14 @@ export default function AINotesPage() {
       const result = await extractPdfText(file);
 
       setPdfText(result.text);
+
+      localStorage.setItem(
+        "irhora-pdf-text",
+        result.text
+      );
+
       setPageCount(result.pageCount);
+
       setFileName(file.name);
     } catch (error) {
       console.error(error);
@@ -36,6 +44,8 @@ export default function AINotesPage() {
   }
 
   function handleReplace() {
+    localStorage.removeItem("irhora-pdf-text");
+
     setPdfText("");
     setFileName("");
     setPageCount(0);
@@ -78,6 +88,8 @@ export default function AINotesPage() {
           <QuickActionGrid
             onAction={setSelectedPrompt}
           />
+
+          <QuizGenerator pdfText={pdfText} />
 
           <PdfChat
             pdfText={pdfText}

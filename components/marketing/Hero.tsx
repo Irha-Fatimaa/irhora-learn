@@ -1,12 +1,13 @@
-import Button from "../ui/Button";
+"use client";
 
+import Link from "next/link";
+
+import Button from "../ui/Button";
 import Navbar from "../layout/Navbar";
 import Footer from "../layout/Footer";
-
 import Features from "./Features";
 import About from "./About";
 import Badge from "../ui/Badge";
-
 
 export default function Hero() {
   return (
@@ -30,18 +31,23 @@ export default function Hero() {
 
             <p className="mx-auto mt-8 max-w-2xl text-lg leading-8 text-muted md:text-xl">
               Meet <strong>Iris</strong>, your intelligent study companion that
-              summarizes notes, generates quizzes, builds study plans, and helps
-              you understand difficult concepts—all in one place.
+              summarizes notes, generates quizzes, builds study plans, explains
+              difficult concepts, and organizes your learning journey—all in one
+              place.
             </p>
 
             <div className="mt-12 flex flex-col justify-center gap-4 sm:flex-row">
-              <Button>
-                Get Started
-              </Button>
+              <Link href="/signup">
+                <Button>
+                  Get Started
+                </Button>
+              </Link>
 
-              <Button variant="secondary">
-                Meet Iris
-              </Button>
+              <Link href="/dashboard/ai">
+                <Button variant="secondary">
+                  Meet Iris
+                </Button>
+              </Link>
             </div>
 
             <div className="mt-12 flex flex-wrap justify-center gap-8 text-sm text-muted">

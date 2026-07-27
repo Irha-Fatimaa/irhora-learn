@@ -2,11 +2,13 @@ type LogoProps = {
   showText?: boolean;
 };
 
-export default function Logo({ showText = true }: LogoProps) {
+export default function Logo({
+  showText = true,
+}: LogoProps) {
   return (
     <div className="flex items-center gap-3">
-      <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-xl font-bold text-white shadow-md">
-        IL
+      <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-xl shadow-md">
+        🧠
       </div>
 
       {showText && (
