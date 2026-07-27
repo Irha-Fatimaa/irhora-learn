@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BookOpen } from "lucide-react";
 import {
   LayoutDashboard,
   MessageSquare,
@@ -39,6 +40,12 @@ const links = [
     href: "/dashboard/planner",
     icon: CalendarDays,
   },
+  {
+  label: "AI Notes",
+  href: "/dashboard/ai-notes",
+  icon: BookOpen,
+},
+
   {
     label: "Settings",
     href: "/dashboard/settings",

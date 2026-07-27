@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 type Message = {
   role: "user" | "assistant";
@@ -114,9 +116,11 @@ export default function AIPage() {
                     : "Iris"}
                 </p>
 
-                <p className="whitespace-pre-wrap">
-                  {message.content}
-                </p>
+                <div className="prose prose-sm max-w-none prose-slate dark:prose-invert">
+  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+    {message.content}
+  </ReactMarkdown>
+</div>
               </div>
             </div>
           ))}
