@@ -171,6 +171,25 @@ Irhora Learn uses **Google Gemini AI** to provide:
 
 ---
 
+## 🤖 AI System Prompt
+
+Irhora Learn uses an AI assistant named **Iris** powered by Google Gemini.
+
+The assistant is instructed to:
+
+- Act as a friendly academic tutor.
+- Explain concepts in simple language.
+- Answer only educational and study-related questions.
+- Summarize uploaded PDF documents.
+- Generate multiple-choice quizzes from study material.
+- Encourage learning rather than simply giving answers.
+- Format responses clearly using Markdown when appropriate.
+- Avoid generating harmful or misleading content.
+
+These instructions guide Iris to provide accurate, student-friendly academic assistance.
+
+---
+
 # 📸 Screenshots
 
 ## Landing Page
@@ -212,10 +231,13 @@ Irhora Learn uses **Google Gemini AI** to provide:
 
 # 👩‍💻 Author
 
-**Irha Fatima**
+**Irha Fatimaa**
 
 GitHub:
 https://github.com/Irha-Fatimaa
+
+Live Demo:
+https://irhora-learn.vercel.app
 
 ---
 
