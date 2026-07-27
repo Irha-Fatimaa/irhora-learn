@@ -43,7 +43,7 @@ export default function Hero() {
                 </Button>
               </Link>
 
-              <Link href="/dashboard/ai">
+              <Link href="#about">
                 <Button variant="secondary">
                   Meet Iris
                 </Button>
